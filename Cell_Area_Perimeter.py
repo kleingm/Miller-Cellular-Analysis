@@ -25,25 +25,13 @@ def parse_cell_file(path_to_file):
 
         splits = line.strip().split(",")
 
-        if begin_reading == False:
-
-            # gather various meta data
-            if splits[0] == "Width":
-                cleaned = splits[1].replace('\"', '')
-                width = float(cleaned)
-            if splits[0] == "Thickness":
-                cleaned = splits[1].replace('\"', '')
-                thickness = float(cleaned)
-            if splits[0] == "Length":
-                cleaned = splits[1].replace('\"', '')
-                length = float(cleaned)
-
-        else:
-            # parse the actual data
+        if begin_reading == True:
+            # Gather Area and Perimeter Data from File
             area_parse.append(float(splits[0].replace('\"', '')))
             perimeter_parse.append(float(splits[1].replace('\"', '')))
 
         # try to find start of data
+        # Might need to edit depending on CSV given
         if splits[0] == "Area":
             begin_reading = True
     file.close()
