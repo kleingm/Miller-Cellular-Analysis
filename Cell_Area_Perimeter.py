@@ -27,12 +27,12 @@ def parse_cell_file(path_to_file):
 
         if begin_reading == True:
             # Gather Area and Perimeter Data from File
-            area_parse.append(float(splits[0].replace('\"', '')))
-            perimeter_parse.append(float(splits[1].replace('\"', '')))
+            area_parse.append(float(splits[1].replace('\"', '')))
+            perimeter_parse.append(float(splits[5].replace('\"', '')))
 
         # try to find start of data
         # Might need to edit depending on CSV given
-        if splits[0] == "Area":
+        if splits[1] == "Area":
             begin_reading = True
     file.close()
 
