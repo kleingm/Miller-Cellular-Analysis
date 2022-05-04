@@ -1,9 +1,16 @@
+# These are all the packages needed for the code to run
+# No need to mess with these
 import numpy as np
 import statistics as stats
 from write_stats import generate_csv_file
 
 
 def parse_cell_file(path_to_file):
+    """
+    Reads through selected CSV data file and returns relevant data for statistical analysis
+    :param path_to_file: Path to the file in Project
+    :return: Area Data, Perimeter Data
+    """
     file = open(path_to_file)
 
     # determine when to begin reading into these files
@@ -84,10 +91,10 @@ if __name__ == "__main__":
     material_folder = "Raw CSV"
 
     # modify this line to select different samples in the material folder
-    sample_name = "example_data"
+    sample_name = "example_data_2"
 
     # Modify this line to change what name the data is saved as
-    output_name = "data_1"
+    output_name = "data_2"
 
     ### Do not modify below this line ###
 
@@ -99,11 +106,12 @@ if __name__ == "__main__":
 
     # Parse Data to get Area and Perimeter "Array?"
     (area, perimeter) = parse_cell_file(path_to_file)
-
+    print(area)
     # Calculate Statistics for Relevant Data
     area_stats = area_statistics(area)
     perimeter_stats = perimeter_statistics(perimeter)
 
+    # Write gathered data to a brand-spanking-new CSV file
     generate_csv_file(output_name + ".csv", area_stats, perimeter_stats)
 
     print("Done!")
