@@ -9,7 +9,19 @@ def generate_csv_file(filename, area, perimeter):
 
     # Step 1: create a variable to hold the file name
 
-    output_file_name = filename
+    # Change to reflect which folder ImageJ CSV is stored
+    data_folder = "Processed Data"
+
+    # modify this line to select different samples in the material folder
+    sample_name = filename
+    str(sample_name)
+
+    # Modify this line to change what name the data is saved as
+    path_to_directory = "./Data/"
+    path_to_samples = path_to_directory + data_folder + "/"
+
+    # Filepath for parsing function
+    output_file_name = path_to_samples + sample_name
 
     # Step 2: use open() to open the file in write mode. Set the return of open()
     # to a variable name that will be your file handle

@@ -76,18 +76,18 @@ def perimeter_statistics(perimeter):
 if __name__ == "__main__":
 
     # Change to reflect which folder ImageJ CSV is stored
-    material_folder = "Raw CSV"
+    data_folder = "Raw CSV"
 
     # modify this line to select different samples in the material folder
-    sample_name = "example_data_2"
+    sample_name = "vash_one"
 
     # Modify this line to change what name the data is saved as
-    output_name = "data_2"
+    output_name = "vash_one"
 
     ### Do not modify below this line ###
 
     path_to_directory = "./Data/"
-    path_to_samples = path_to_directory + material_folder + "/"
+    path_to_samples = path_to_directory + data_folder + "/"
 
     # Filepath for parsing function
     path_to_file = path_to_samples + sample_name + ".csv"
