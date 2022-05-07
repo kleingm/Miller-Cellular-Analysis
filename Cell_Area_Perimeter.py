@@ -17,6 +17,7 @@ def parse_cell_file(path_to_file):
     begin_reading = False
     area_parse = []
     perimeter_parse = []
+    num_samples = 0
 
     # begin iterating through file
     for line in file:
@@ -29,6 +30,8 @@ def parse_cell_file(path_to_file):
             # Gather Area and Perimeter Data from File
             area_parse.append(float(splits[1].replace('\"', '')))
             perimeter_parse.append(float(splits[5].replace('\"', '')))
+            num_samples += 1
+
 
         # try to find start of data
         # Might need to edit depending on CSV given
@@ -36,7 +39,7 @@ def parse_cell_file(path_to_file):
             begin_reading = True
     file.close()
 
-    return np.asarray(area_parse), np.asarray(perimeter_parse)
+    return np.asarray(area_parse), np.asarray(perimeter_parse), num_samples
 
 
 def area_statistics(area):
@@ -79,10 +82,10 @@ if __name__ == "__main__":
     data_folder = "Raw CSV"
 
     # modify this line to select different samples in the material folder
-    sample_name = "vash_one"
+    sample_name = "miller_results"
 
     # Modify this line to change what name the data is saved as
-    output_name = "vash_one"
+    output_name = "vash_Processed"
 
     ### Do not modify below this line ###
 
@@ -93,13 +96,12 @@ if __name__ == "__main__":
     path_to_file = path_to_samples + sample_name + ".csv"
 
     # Parse Data to get Area and Perimeter "Array?"
-    (area, perimeter) = parse_cell_file(path_to_file)
-    print(area)
+    (area, perimeter, num_samples) = parse_cell_file(path_to_file)
     # Calculate Statistics for Relevant Data
     area_stats = area_statistics(area)
     perimeter_stats = perimeter_statistics(perimeter)
 
     # Write gathered data to a brand-spanking-new CSV file
-    generate_csv_file(output_name + ".csv", area_stats, perimeter_stats)
+    generate_csv_file(output_name + ".csv", area_stats, perimeter_stats, num_samples)
 
     print("Done!")

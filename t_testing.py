@@ -14,6 +14,7 @@ def parse_stats_data(path_to_file):
     begin_reading = False
     area_parse = []
     perimeter_parse = []
+    num_samples = []
 
     # begin iterating through file
     for line in file:
@@ -32,16 +33,17 @@ def parse_stats_data(path_to_file):
             perimeter_parse.append(float(splits[5].replace('\"', '')))
             perimeter_parse.append(float(splits[6].replace('\"', '')))
             perimeter_parse.append(float(splits[7].replace('\"', '')))
+            num_samples.append(float(splits[8].replace('\"', '')))
 
         # try to find start of data
         if splits[0] == "Area Mean":
             begin_reading = True
     file.close()
 
-    return np.asarray(area_parse), np.asarray(perimeter_parse)
+    return np.asarray(area_parse), np.asarray(perimeter_parse), np.array(num_samples)
 
-def compare_area_means(sample_1, sample_2):
-    num_samples = 20  # Edit this Value Based on how many Cell Samples were used to find Mean
+def compare_area_means(sample_1, sample_2, num):
+    num_samples = num
     sample1_mean = sample_1[0]
     sample1_stdev = sample_1[1]
     dist1 = np.random.normal(loc=sample1_mean, scale=sample1_stdev, size=num_samples)
@@ -51,12 +53,12 @@ def compare_area_means(sample_1, sample_2):
     dist2 = np.random.normal(loc=sample2_mean, scale=sample2_stdev, size=num_samples)
 
     (stat, p_value) = scipy.stats.ttest_ind(dist1, dist2, alternative='two-sided')
-    print(stat, p_value)
+    print("The p values for the areas is " + p_value)
 
     return p_value
 
-def compare_perimeter_means(sample_1, sample_2):
-    num_samples = 20  # Edit this Value Based on how many Cell Samples were used to find Mean
+def compare_perimeter_means(sample_1, sample_2, num):
+    num_samples = num
     sample1_mean = sample_1[0]
     sample1_stdev = sample_1[1]
     dist1 = np.random.normal(loc=sample1_mean, scale=sample1_stdev, size=num_samples)
@@ -66,7 +68,7 @@ def compare_perimeter_means(sample_1, sample_2):
     dist2 = np.random.normal(loc=sample2_mean, scale=sample2_stdev, size=num_samples)
 
     (stat, p_value) = scipy.stats.ttest_ind(dist1, dist2, alternative='two-sided')
-    print(stat, p_value)
+    print("The p-value for the perimeters is" + p_value)
 
     return p_value
 
@@ -89,12 +91,13 @@ if __name__ == '__main__':
     path_to_file_two = path_to_samples + sample_name_two + ".csv"
 
     # Parse Data to pull Area and Mean data out into Arrays
-    (area_one, perimeter_one) = parse_stats_data(path_to_file_one)
-    (area_two, perimeter_two) = parse_stats_data(path_to_file_two)
+    (area_one, perimeter_one, num_samples_one) = parse_stats_data(path_to_file_one)
+    (area_two, perimeter_two, num_samples_two) = parse_stats_data(path_to_file_two)
 
     # Run through Two-Sided T-Test to Compare means, looking for p < 0.05 for significance
-    area_p = compare_area_means(area_one, area_two)
-    perimeter_p = compare_perimeter_means(perimeter_one, perimeter_two)
+    area_p = compare_area_means(area_one, area_two, min(int(num_samples_one[0]), int(num_samples_two[0])))
+    perimeter_p = compare_perimeter_means(perimeter_one, perimeter_two,
+                                          min(int(num_samples_one[0]), int(num_samples_two[0])))
     area_fake = 0.005
 
     # Plot for the two areas
@@ -106,6 +109,10 @@ if __name__ == '__main__':
     ax.set_xticklabels([sample_name_one, sample_name_two])
     ax.set_title('Two-Sided t-test of the Areas of ' + sample_name_one + ' and ' + sample_name_two)
     ax.yaxis.grid(True)
+    if area_p < 0.05:
+        ax.annotate('*', xy=(0.5, 0.90), xytext=(0.5, .92), xycoords='axes fraction',
+                fontsize=10 * 1.5, ha='center', va='bottom',
+                arrowprops=dict(arrowstyle='-[, widthB=4.0, lengthB=1', lw=2.0))
 
     plt.tight_layout()
     plt.show()
@@ -119,6 +126,10 @@ if __name__ == '__main__':
     ax.set_xticklabels([sample_name_one, sample_name_two])
     ax.set_title('Two-Sided t-test of the Perimeters ' + sample_name_one + ' and ' + sample_name_two)
     ax.yaxis.grid(True)
+    if perimeter_p < 0.05:
+        ax.annotate('*', xy=(0.5, 0.90), xytext=(0.5, .92), xycoords='axes fraction',
+                fontsize=10 * 1.5, ha='center', va='bottom',
+                arrowprops=dict(arrowstyle='-[, widthB=4.0, lengthB=1', lw=2.0))
 
     plt.tight_layout()
     plt.show()

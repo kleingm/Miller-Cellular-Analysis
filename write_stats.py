@@ -1,4 +1,4 @@
-def generate_csv_file(filename, area, perimeter):
+def generate_csv_file(filename, area, perimeter, num_samples):
     """
     A function to take a list of material strength results and print to a CSV file
     :param filename: File that should be written to
@@ -32,7 +32,7 @@ def generate_csv_file(filename, area, perimeter):
     # Step 3: write out the header for the CSV file. This string is provided for you so
     # your data can be loaded and checked. Use write().
     file_header = "Area Mean, Area StDev, Area Max, Area Min, Perimeter Mean, Perimeter StDev, Perimeter Max" \
-                  ", Perimeter Min\n"
+                  ", Perimeter Min, Num Samples\n"
 
     # write header string out to file
     file.write(file_header)
@@ -59,7 +59,7 @@ def generate_csv_file(filename, area, perimeter):
     # uncomment the line below
     string_to_write = str(area_mean) + "," + str(area_stdev) + "," + str(area_max) + "," + str(area_min) \
                       + "," + str(perimeter_mean) + "," + str(perimeter_stdev) + "," + str(perimeter_max) +\
-                      "," + str(perimeter_min) + "\n"
+                      "," + str(perimeter_min) + "," + str(num_samples) + "\n"
 
     # Finally, given that long string, write it to a file
 
