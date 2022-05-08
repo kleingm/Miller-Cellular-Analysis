@@ -1,6 +1,7 @@
-import scipy.stats
+from scipy import stats
 import numpy as np
 import matplotlib.pyplot as plt
+rng = np.random.default_rng()
 
 def parse_stats_data(path_to_file):
     """
@@ -42,33 +43,39 @@ def parse_stats_data(path_to_file):
 
     return np.asarray(area_parse), np.asarray(perimeter_parse), np.array(num_samples)
 
-def compare_area_means(sample_1, sample_2, num):
-    num_samples = num
+def compare_area_means(sample_1, sample_2, num_1, num_2):
+    num1_samples = num_1
     sample1_mean = sample_1[0]
     sample1_stdev = sample_1[1]
-    dist1 = np.random.normal(loc=sample1_mean, scale=sample1_stdev, size=num_samples)
+    dof_1 = num_1 - 1
 
+    num2_samples = num_2
     sample2_mean = sample_2[0]
     sample2_stdev = sample_2[1]
-    dist2 = np.random.normal(loc=sample2_mean, scale=sample2_stdev, size=num_samples)
+    dof_2 = num_2 - 1
 
-    (stat, p_value) = scipy.stats.ttest_ind(dist1, dist2, alternative='two-sided')
-    print("The p values for the areas is " + p_value)
+    (stat, p_value) = stats.ttest_ind_from_stats(sample1_mean, np.sqrt(sample1_stdev), num1_samples,
+                              sample2_mean, np.sqrt(sample2_stdev), num2_samples,
+                              equal_var=False)
+    print("The p values for the areas is " + str(p_value))
 
     return p_value
 
-def compare_perimeter_means(sample_1, sample_2, num):
-    num_samples = num
+def compare_perimeter_means(sample_1, sample_2, num_1, num_2):
+    num1_samples = num_1
     sample1_mean = sample_1[0]
     sample1_stdev = sample_1[1]
-    dist1 = np.random.normal(loc=sample1_mean, scale=sample1_stdev, size=num_samples)
+    dof_1 = num_1 - 1
 
+    num2_samples = num_2
     sample2_mean = sample_2[0]
     sample2_stdev = sample_2[1]
-    dist2 = np.random.normal(loc=sample2_mean, scale=sample2_stdev, size=num_samples)
+    dof_2 = num_2 - 1
 
-    (stat, p_value) = scipy.stats.ttest_ind(dist1, dist2, alternative='two-sided')
-    print("The p-value for the perimeters is" + p_value)
+    (stat, p_value) = stats.ttest_ind_from_stats(sample1_mean, np.sqrt(sample1_stdev), num1_samples,
+                                                 sample2_mean, np.sqrt(sample2_stdev), num2_samples,
+                                                 equal_var=False)
+    print("The p-value for the perimeters is " + str(p_value))
 
     return p_value
 
@@ -95,10 +102,10 @@ if __name__ == '__main__':
     (area_two, perimeter_two, num_samples_two) = parse_stats_data(path_to_file_two)
 
     # Run through Two-Sided T-Test to Compare means, looking for p < 0.05 for significance
-    area_p = compare_area_means(area_one, area_two, min(int(num_samples_one[0]), int(num_samples_two[0])))
+    area_p = compare_area_means(area_one, area_two, int(num_samples_one[0]), int(num_samples_two[0]))
     perimeter_p = compare_perimeter_means(perimeter_one, perimeter_two,
-                                          min(int(num_samples_one[0]), int(num_samples_two[0])))
-    area_fake = 0.005
+                                          int(num_samples_one[0]), int(num_samples_two[0]))
+    area_fake = 0.005  # dummy variable used to test if annotation was working
 
     # Plot for the two areas
     fig, ax = plt.subplots()

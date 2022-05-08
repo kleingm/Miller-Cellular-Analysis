@@ -1,8 +1,10 @@
 # These are all the packages needed for the code to run
 # No need to mess with these
 import numpy as np
-import statistics as stats
+from scipy import stats
+import statistics as stat
 from write_stats import generate_csv_file
+from t_testing import compare_area_means, compare_perimeter_means
 
 
 def parse_cell_file(path_to_file):
@@ -48,8 +50,8 @@ def area_statistics(area):
     :param area: Array of areas from cell ImageJ Data
     :return: An array of various statistical data
     """
-    area_mean = stats.mean(area)
-    area_stdev = stats.stdev(area)
+    area_mean = stat.mean(area)
+    area_stdev = stat.stdev(area)
     area_max = max(area)
     area_min = min(area)
     area_stats_array = [area_mean, area_stdev, area_max, area_min]
@@ -64,8 +66,8 @@ def perimeter_statistics(perimeter):
     :param perimeter: Array of perimeters from ImageJ data
     :return: An array of various statistical data
     """
-    perimeter_mean = stats.mean(perimeter)
-    perimeter_stdev = stats.stdev(perimeter)
+    perimeter_mean = stat.mean(perimeter)
+    perimeter_stdev = stat.stdev(perimeter)
     perimeter_max = max(perimeter)
     perimeter_min = min(perimeter)
     perimeter_stats_array = [perimeter_mean, perimeter_stdev, perimeter_max, perimeter_min]
@@ -82,7 +84,7 @@ if __name__ == "__main__":
     data_folder = "Raw CSV"
 
     # modify this line to select different samples in the material folder
-    sample_name = "miller_results"
+    sample_name = "NewResults"
 
     # Modify this line to change what name the data is saved as
     output_name = "vash_Processed"
