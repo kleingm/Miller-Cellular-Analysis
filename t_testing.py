@@ -1,7 +1,10 @@
 from scipy import stats
 import numpy as np
 import matplotlib.pyplot as plt
-rng = np.random.default_rng()
+import tkinter as tk  # from tkinter import Tk for Python 3.x
+from tkinter.filedialog import askopenfilename
+import os
+
 
 def parse_stats_data(path_to_file):
     """
@@ -24,7 +27,7 @@ def parse_stats_data(path_to_file):
 
         splits = line.strip().split(",")
 
-        if begin_reading == True:
+        if begin_reading:
             # parse the actual data
             area_parse.append(float(splits[0].replace('\"', '')))
             area_parse.append(float(splits[1].replace('\"', '')))
@@ -43,59 +46,52 @@ def parse_stats_data(path_to_file):
 
     return np.asarray(area_parse), np.asarray(perimeter_parse), np.array(num_samples)
 
+
 def compare_area_means(sample_1, sample_2, num_1, num_2):
     num1_samples = num_1
     sample1_mean = sample_1[0]
-    sample1_stdev = sample_1[1]
-    dof_1 = num_1 - 1
+    sample1_deviation = sample_1[1]
+    num_1 - 1
 
     num2_samples = num_2
     sample2_mean = sample_2[0]
-    sample2_stdev = sample_2[1]
-    dof_2 = num_2 - 1
+    sample2_deviation = sample_2[1]
 
-    (stat, p_value) = stats.ttest_ind_from_stats(sample1_mean, np.sqrt(sample1_stdev), num1_samples,
-                              sample2_mean, np.sqrt(sample2_stdev), num2_samples,
-                              equal_var=False)
+    (stat, p_value) = stats.ttest_ind_from_stats(sample1_mean, np.sqrt(sample1_deviation), num1_samples,
+                                                 sample2_mean, np.sqrt(sample2_deviation), num2_samples,
+                                                 equal_var=False)
     print("The p values for the areas is " + str(p_value))
 
     return p_value
 
+
 def compare_perimeter_means(sample_1, sample_2, num_1, num_2):
     num1_samples = num_1
     sample1_mean = sample_1[0]
-    sample1_stdev = sample_1[1]
-    dof_1 = num_1 - 1
+    sample1_deviation = sample_1[1]
 
     num2_samples = num_2
     sample2_mean = sample_2[0]
-    sample2_stdev = sample_2[1]
-    dof_2 = num_2 - 1
+    sample2_deviation = sample_2[1]
 
-    (stat, p_value) = stats.ttest_ind_from_stats(sample1_mean, np.sqrt(sample1_stdev), num1_samples,
-                                                 sample2_mean, np.sqrt(sample2_stdev), num2_samples,
+    (stat, p_value) = stats.ttest_ind_from_stats(sample1_mean, np.sqrt(sample1_deviation), num1_samples,
+                                                 sample2_mean, np.sqrt(sample2_deviation), num2_samples,
                                                  equal_var=False)
     print("The p-value for the perimeters is " + str(p_value))
 
     return p_value
 
+
 if __name__ == '__main__':
-    # Change to reflect which folder ImageJ CSV is stored
-    # Change to reflect which folder ImageJ CSV is stored
-    data_folder = "Processed Data"
 
-    # modify this line to select different samples in the material folder
-    sample_name_one = "Miller_Processed"
-    sample_name_two = "vash_Processed"
+    tk.Tk().withdraw()  # we don't want a full GUI, so keep the root window from appearing
+    path_to_file_one = askopenfilename()  # show an "Open" dialog box and return the path to the selected file
 
-    ### Do not modify below this line ###
+    tk.Tk().withdraw()
+    path_to_file_two = askopenfilename()  # show an "Open" dialog box and return the path to the selected file
 
-    path_to_directory = "./Data/"
-    path_to_samples = path_to_directory + data_folder + "/"
-
-    # Filepath for parsing function
-    path_to_file_one = path_to_samples + sample_name_one + ".csv"
-    path_to_file_two = path_to_samples + sample_name_two + ".csv"
+    sample_name_one = os.path.basename(path_to_file_one)
+    sample_name_two = os.path.basename(path_to_file_two)
 
     # Parse Data to pull Area and Mean data out into Arrays
     (area_one, perimeter_one, num_samples_one) = parse_stats_data(path_to_file_one)
@@ -118,8 +114,8 @@ if __name__ == '__main__':
     ax.yaxis.grid(True)
     if area_p < 0.05:
         ax.annotate('*', xy=(0.5, 0.90), xytext=(0.5, .92), xycoords='axes fraction',
-                fontsize=10 * 1.5, ha='center', va='bottom',
-                arrowprops=dict(arrowstyle='-[, widthB=4.0, lengthB=1', lw=2.0))
+                    fontsize=10 * 1.5, ha='center', va='bottom',
+                    arrowprops=dict(arrowstyle='-[, widthB=4.0, lengthB=1', lw=2.0))
 
     plt.tight_layout()
     plt.show()
@@ -131,12 +127,12 @@ if __name__ == '__main__':
     ax.set_ylabel('Mean Cell Perimeter (units)')
     ax.set_xticks([sample_name_one, sample_name_two])
     ax.set_xticklabels([sample_name_one, sample_name_two])
-    ax.set_title('Two-Sided t-test of the Perimeters ' + sample_name_one + ' and ' + sample_name_two)
+    ax.set_title('Two-Sided t-test of the Perimeters of ' + sample_name_one + ' and ' + sample_name_two)
     ax.yaxis.grid(True)
     if perimeter_p < 0.05:
         ax.annotate('*', xy=(0.5, 0.90), xytext=(0.5, .92), xycoords='axes fraction',
-                fontsize=10 * 1.5, ha='center', va='bottom',
-                arrowprops=dict(arrowstyle='-[, widthB=4.0, lengthB=1', lw=2.0))
+                    fontsize=10 * 1.5, ha='center', va='bottom',
+                    arrowprops=dict(arrowstyle='-[, widthB=4.0, lengthB=1', lw=2.0))
 
     plt.tight_layout()
     plt.show()

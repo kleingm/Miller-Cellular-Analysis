@@ -1,10 +1,10 @@
 # These are all the packages needed for the code to run
 # No need to mess with these
 import numpy as np
-from scipy import stats
 import statistics as stat
 from write_stats import generate_csv_file
-from t_testing import compare_area_means, compare_perimeter_means
+import tkinter as tk    # from tkinter import Tk for Python 3.x
+from tkinter.filedialog import askopenfilename
 
 
 def parse_cell_file(path_to_file):
@@ -19,7 +19,7 @@ def parse_cell_file(path_to_file):
     begin_reading = False
     area_parse = []
     perimeter_parse = []
-    num_samples = 0
+    num_sample = 0
 
     # begin iterating through file
     for line in file:
@@ -28,12 +28,11 @@ def parse_cell_file(path_to_file):
 
         splits = line.strip().split(",")
 
-        if begin_reading == True:
+        if begin_reading:
             # Gather Area and Perimeter Data from File
             area_parse.append(float(splits[1].replace('\"', '')))
             perimeter_parse.append(float(splits[5].replace('\"', '')))
-            num_samples += 1
-
+            num_sample += 1
 
         # try to find start of data
         # Might need to edit depending on CSV given
@@ -41,36 +40,36 @@ def parse_cell_file(path_to_file):
             begin_reading = True
     file.close()
 
-    return np.asarray(area_parse), np.asarray(perimeter_parse), num_samples
+    return np.asarray(area_parse), np.asarray(perimeter_parse), num_sample
 
 
-def area_statistics(area):
+def area_statistics(area_input):
     """
     Calculate important statistical data about the area of a cell
-    :param area: Array of areas from cell ImageJ Data
+    :param area_input: Array of areas from cell ImageJ Data
     :return: An array of various statistical data
     """
-    area_mean = stat.mean(area)
-    area_stdev = stat.stdev(area)
-    area_max = max(area)
-    area_min = min(area)
-    area_stats_array = [area_mean, area_stdev, area_max, area_min]
+    area_mean = stat.mean(area_input)
+    area_deviation = stat.stdev(area_input)
+    area_max = max(area_input)
+    area_min = min(area_input)
+    area_stats_array = [area_mean, area_deviation, area_max, area_min]
     np.array(area_stats_array)
 
     return area_stats_array
 
 
-def perimeter_statistics(perimeter):
+def perimeter_statistics(perimeter_input):
     """
     Calculate important statistical data about the perimeter of a cell
-    :param perimeter: Array of perimeters from ImageJ data
+    :param perimeter_input: Array of perimeters from ImageJ data
     :return: An array of various statistical data
     """
-    perimeter_mean = stat.mean(perimeter)
-    perimeter_stdev = stat.stdev(perimeter)
-    perimeter_max = max(perimeter)
-    perimeter_min = min(perimeter)
-    perimeter_stats_array = [perimeter_mean, perimeter_stdev, perimeter_max, perimeter_min]
+    perimeter_mean = stat.mean(perimeter_input)
+    perimeter_deviation = stat.stdev(perimeter_input)
+    perimeter_max = max(perimeter_input)
+    perimeter_min = min(perimeter_input)
+    perimeter_stats_array = [perimeter_mean, perimeter_deviation, perimeter_max, perimeter_min]
     np.array(perimeter_stats_array)
 
     return perimeter_stats_array
@@ -80,30 +79,20 @@ def perimeter_statistics(perimeter):
 
 if __name__ == "__main__":
 
-    # Change to reflect which folder ImageJ CSV is stored
-    data_folder = "Raw CSV"
+    tk.Tk().withdraw()  # we don't want a full GUI, so keep the root window from appearing
+    filename = askopenfilename()  # show an "Open" dialog box and return the path to the selected file
 
-    # modify this line to select different samples in the material folder
-    sample_name = "NewResults"
+    output_name = input("Type The Filename you want to use for output:")
 
-    # Modify this line to change what name the data is saved as
-    output_name = "vash_Processed"
-
-    ### Do not modify below this line ###
-
-    path_to_directory = "./Data/"
-    path_to_samples = path_to_directory + data_folder + "/"
-
-    # Filepath for parsing function
-    path_to_file = path_to_samples + sample_name + ".csv"
+    # Do not modify below this line
 
     # Parse Data to get Area and Perimeter "Array?"
-    (area, perimeter, num_samples) = parse_cell_file(path_to_file)
+    (area, perimeter, num_samples) = parse_cell_file(filename)
     # Calculate Statistics for Relevant Data
     area_stats = area_statistics(area)
     perimeter_stats = perimeter_statistics(perimeter)
 
     # Write gathered data to a brand-spanking-new CSV file
-    generate_csv_file(output_name + ".csv", area_stats, perimeter_stats, num_samples)
+    generate_csv_file(str(output_name) + ".csv", area_stats, perimeter_stats, num_samples)
 
     print("Done!")
