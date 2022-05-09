@@ -15,6 +15,7 @@
 * MatPlotLib
 * SciPy
 * NumPy
+* Tkinter
 
 # <a name="how-to-use:"></a>How To Use:
 <p> Step #1: Load Data you want to process in the Raw CSV
