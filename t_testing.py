@@ -1,9 +1,9 @@
+# These are all the packages needed for the code to run
+# No need to mess with these
 from scipy import stats
 import numpy as np
 import matplotlib.pyplot as plt
-import tkinter as tk  # from tkinter import Tk for Python 3.x
-from tkinter.filedialog import askopenfilename
-import os
+import easygui
 
 
 def parse_stats_data(path_to_file):
@@ -48,15 +48,18 @@ def parse_stats_data(path_to_file):
 
 
 def compare_area_means(sample_1, sample_2, num_1, num_2):
+
+    # Pulling relevant data from arrays of first sample
     num1_samples = num_1
     sample1_mean = sample_1[0]
     sample1_deviation = sample_1[1]
-    num_1 - 1
 
+    # Pulling relevant data from arrays of second sample
     num2_samples = num_2
     sample2_mean = sample_2[0]
     sample2_deviation = sample_2[1]
 
+    # This is the t-test run on the stats given from the .csv files
     (stat, p_value) = stats.ttest_ind_from_stats(sample1_mean, np.sqrt(sample1_deviation), num1_samples,
                                                  sample2_mean, np.sqrt(sample2_deviation), num2_samples,
                                                  equal_var=False)
@@ -66,14 +69,18 @@ def compare_area_means(sample_1, sample_2, num_1, num_2):
 
 
 def compare_perimeter_means(sample_1, sample_2, num_1, num_2):
+
+    # Pulling relevant data from arrays of first sample
     num1_samples = num_1
     sample1_mean = sample_1[0]
     sample1_deviation = sample_1[1]
 
+    # Pulling relevant data from arrays of second sample
     num2_samples = num_2
     sample2_mean = sample_2[0]
     sample2_deviation = sample_2[1]
 
+    # This is the t-test run on the stats given from the .csv files
     (stat, p_value) = stats.ttest_ind_from_stats(sample1_mean, np.sqrt(sample1_deviation), num1_samples,
                                                  sample2_mean, np.sqrt(sample2_deviation), num2_samples,
                                                  equal_var=False)
@@ -81,17 +88,25 @@ def compare_perimeter_means(sample_1, sample_2, num_1, num_2):
 
     return p_value
 
+# This is the actual runtime code
+
 
 if __name__ == '__main__':
 
-    tk.Tk().withdraw()  # we don't want a full GUI, so keep the root window from appearing
-    path_to_file_one = askopenfilename()  # show an "Open" dialog box and return the path to the selected file
+    # Name of folder where data from first program is saved to
+    folder_name = "Processed Data"
 
-    tk.Tk().withdraw()
-    path_to_file_two = askopenfilename()  # show an "Open" dialog box and return the path to the selected file
+    # Relative Directions to the folder
+    path_to_directory = "../Miller-Cellular-Analysis/Data/"
+    path_to_samples = path_to_directory + folder_name + "/"
 
-    sample_name_one = os.path.basename(path_to_file_one)
-    sample_name_two = os.path.basename(path_to_file_two)
+    # GUI pop-ups to selected which samples to compare
+    sample_name_one = easygui.enterbox('Input Name of First Sample:')
+    sample_name_two = easygui.enterbox('Input Name of Second Sample:')
+
+    # Full relative filepath
+    path_to_file_one = path_to_samples + sample_name_one + ".csv"
+    path_to_file_two = path_to_samples + sample_name_two + ".csv"
 
     # Parse Data to pull Area and Mean data out into Arrays
     (area_one, perimeter_one, num_samples_one) = parse_stats_data(path_to_file_one)
