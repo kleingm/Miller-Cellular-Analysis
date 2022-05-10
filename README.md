@@ -1,4 +1,11 @@
-# Cellular Analysis Research
+# <center> <ins> Cellular Analysis Research </ins> </center>
+
+<center> <figure> 
+    <img src="./Saved Images/cell_image.png"
+         alt="Comparison"
+    width="500" height="300">
+</figure> </center>
+
 > The purpose of this project is to aid in the processing
 > of cell data for Dr. Callie Miller's research. Included
 > in this repo are programs that parse through raw data
@@ -76,8 +83,15 @@ the "Processed Data" sub-folder. Otherwise, the program
 will not have the correct filepath and will not run.
 
 # <a name="for-the-future:"></a>For The Future:
-One addition that the team can see being valuable for the
+<p> One addition that the team can see being valuable for the
 future would be the ability to run multiple t-tests at
 once, in the form of a Two-Way ANOVA test. That would 
 allow the user to compare multiple samples all at the 
-same time. 
+same time. </p>
+
+<p> Another task the team could look into would be mapping out
+an entire cell movie into a line graph with error bars to
+be able to visualize how the areas or perimeters change 
+over time. This would work as an entirely separate process
+from the t-tests, and would need more time to fully flesh 
+out.</p>
