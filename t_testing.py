@@ -17,10 +17,10 @@ def parse_stats_data(path_to_file):
     """
     file = open(path_to_file)
 
-    # determine when to begin reading into these files
-    begin_reading = False
     area_parse = []
     perimeter_parse = []
+    # determine when to begin reading into these files
+    begin_reading = False
     num_samples = []
 
     # begin iterating through file
@@ -102,19 +102,19 @@ if __name__ == '__main__':
     tk.Tk().withdraw()  # we don't want a full GUI, so keep the root window from appearing
     filename_two = askopenfilename()  # show an "Open" dialog box and return the path to the selected file
 
-    sample_name_one = os.path.basename(filename_one)
-    sample_name_two = os.path.basename(filename_two)
+    sample_name_a = os.path.basename(filename_one)
+    sample_name_b = os.path.basename(filename_two)
+    sample_name_one = sample_name_a.replace(".csv", "")
+    sample_name_two = sample_name_b.replace(".csv", "")
 
     # Check if file exists, close if not
     exist_one = os.path.exists(filename_one)
     if not exist_one:
-        print(filename_one + " does not exist in the Processed Data folder.")
-        sys.exit()
+        sys.exit(filename_one + " does not exist in the Processed Data folder.")
 
     exist_two = os.path.exists(filename_two)
     if not exist_two:
-        print(filename_two + " does not exist in the Processed Data folder.")
-        sys.exit()
+        sys.exit(filename_two + " does not exist in the Processed Data folder.")
 
     # Parse Data to pull Area and Mean data out into Arrays
     (area_one, perimeter_one, num_samples_one) = parse_stats_data(filename_one)
@@ -124,7 +124,6 @@ if __name__ == '__main__':
     area_p = compare_area_means(area_one, area_two, int(num_samples_one[0]), int(num_samples_two[0]))
     perimeter_p = compare_perimeter_means(perimeter_one, perimeter_two,
                                           int(num_samples_one[0]), int(num_samples_two[0]))
-    area_fake = 0.005  # dummy variable used to test if annotation was working
 
     # Plot for the two areas
     fig, ax = plt.subplots()

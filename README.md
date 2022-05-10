@@ -69,6 +69,9 @@ generated using the Save icon on the plot popup.</p>
 standard deviation. </em> </center> </figcaption>
 </figure>
 
+<p> <strong> How to recreate this image: </strong> </p>
+
+
 # <a name="limitations:"></a>Limitations:
 In order for the programs to run effectively, the data
 that is output from ImageJ must stay in the same form 
@@ -95,3 +98,7 @@ be able to visualize how the areas or perimeters change
 over time. This would work as an entirely separate process
 from the t-tests, and would need more time to fully flesh 
 out.</p>
+
+<p> For quality of life, the team could look into command-line
+arguments to make the entire process run through with one click.
+Possible updates to come with this. </p>
