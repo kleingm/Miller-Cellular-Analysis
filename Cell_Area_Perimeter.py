@@ -5,7 +5,6 @@ import statistics as stat
 from write_stats import generate_csv_file
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
-import easygui
 
 
 def parse_cell_file(path_to_file):
@@ -83,9 +82,6 @@ if __name__ == "__main__":
     tk.Tk().withdraw()  # we don't want a full GUI, so keep the root window from appearing
     filename = askopenfilename()  # show an "Open" dialog box and return the path to the selected file
 
-    # GUI pop-up that asks for the name the .csv file will save as in "Processed Data"
-    output_name = easygui.enterbox("Type The Filename you want to use for output:")
-
     # Parse Data to get Area, Perimeter, and Number of Samples
     (area, perimeter, num_samples) = parse_cell_file(filename)
 
@@ -94,6 +90,6 @@ if __name__ == "__main__":
     perimeter_stats = perimeter_statistics(perimeter)
 
     # Write gathered data to a brand-spanking-new CSV file
-    generate_csv_file(str(output_name) + ".csv", area_stats, perimeter_stats, num_samples)
+    generate_csv_file(area_stats, perimeter_stats, num_samples)
 
     print("Done!")

@@ -3,7 +3,10 @@
 from scipy import stats
 import numpy as np
 import matplotlib.pyplot as plt
-import easygui
+import os
+import sys
+import tkinter as tk
+from tkinter.filedialog import askopenfilename
 
 
 def parse_stats_data(path_to_file):
@@ -93,24 +96,29 @@ def compare_perimeter_means(sample_1, sample_2, num_1, num_2):
 
 if __name__ == '__main__':
 
-    # Name of folder where data from first program is saved to
-    folder_name = "Processed Data"
+    tk.Tk().withdraw()  # we don't want a full GUI, so keep the root window from appearing
+    filename_one = askopenfilename()  # show an "Open" dialog box and return the path to the selected file
 
-    # Relative Directions to the folder
-    path_to_directory = "../Miller-Cellular-Analysis/Data/"
-    path_to_samples = path_to_directory + folder_name + "/"
+    tk.Tk().withdraw()  # we don't want a full GUI, so keep the root window from appearing
+    filename_two = askopenfilename()  # show an "Open" dialog box and return the path to the selected file
 
-    # GUI pop-ups to selected which samples to compare
-    sample_name_one = easygui.enterbox('Input Name of First Sample:')
-    sample_name_two = easygui.enterbox('Input Name of Second Sample:')
+    sample_name_one = os.path.basename(filename_one)
+    sample_name_two = os.path.basename(filename_two)
 
-    # Full relative filepath
-    path_to_file_one = path_to_samples + sample_name_one + ".csv"
-    path_to_file_two = path_to_samples + sample_name_two + ".csv"
+    # Check if file exists, close if not
+    exist_one = os.path.exists(filename_one)
+    if not exist_one:
+        print(filename_one + " does not exist in the Processed Data folder.")
+        sys.exit()
+
+    exist_two = os.path.exists(filename_two)
+    if not exist_two:
+        print(filename_two + " does not exist in the Processed Data folder.")
+        sys.exit()
 
     # Parse Data to pull Area and Mean data out into Arrays
-    (area_one, perimeter_one, num_samples_one) = parse_stats_data(path_to_file_one)
-    (area_two, perimeter_two, num_samples_two) = parse_stats_data(path_to_file_two)
+    (area_one, perimeter_one, num_samples_one) = parse_stats_data(filename_one)
+    (area_two, perimeter_two, num_samples_two) = parse_stats_data(filename_two)
 
     # Run through Two-Sided T-Test to Compare means, looking for p < 0.05 for significance
     area_p = compare_area_means(area_one, area_two, int(num_samples_one[0]), int(num_samples_two[0]))
