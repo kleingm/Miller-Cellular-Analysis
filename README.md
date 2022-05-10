@@ -1,7 +1,7 @@
 # <center> <ins> Cellular Analysis Research </ins> </center>
 
 <center> <figure> 
-    <img src="./Saved Images/cell_image.png"
+    <img src="./Saved Images/cell_image.PNG"
          alt="Comparison"
     width="500" height="300">
 </figure> </center>
