@@ -69,7 +69,9 @@ generated using the Save icon on the plot popup.</p>
 standard deviation. </em> </center> </figcaption>
 </figure>
 
-<p> <strong> How to recreate this image: </strong> <br>
+<p> <strong> How to recreate this image: </strong> </p>
+
+<p>
 Run the Cell_Area_Perimeter Program and select "miller_results.csv"
 from the Raw CSV folder. Save the output as Miller_Processed
 to wherever you'd like. Run the same program again, choose the same 
