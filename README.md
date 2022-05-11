@@ -30,8 +30,8 @@
 * write_stats.py
 
 # <a name="how-to-use:"></a>How To Use:
-<p> <strong> Step #1: </strong> Run ImageJ to get data from a cell movie.
-The ImageJ Process is listed [here.](ReadMeImageJ.pdf) </p>
+**Step #1:** Run ImageJ to get data from a cell movie.
+The ImageJ Process is listed in the file [ReadMeImageJ.pdf](ReadMeImageJ.pdf)
 
 <p> <strong> Step #2: </strong> Load the "Cell_Area_Perimeter.py" program
 and run it. Two prompts will pop up. The first will ask you to choose a file
