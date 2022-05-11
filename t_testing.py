@@ -99,8 +99,16 @@ if __name__ == '__main__':
     tk.Tk().withdraw()  # we don't want a full GUI, so keep the root window from appearing
     filename_one = askopenfilename()  # show an "Open" dialog box and return the path to the selected file
 
+    # Exit Condition if no file Chosen
+    if filename_one == '':
+        sys.exit('First Input File was not Chosen. Please Choose a File to Import.')
+
     tk.Tk().withdraw()  # we don't want a full GUI, so keep the root window from appearing
     filename_two = askopenfilename()  # show an "Open" dialog box and return the path to the selected file
+
+    # Exit Condition if no file Chosen
+    if filename_two == '':
+        sys.exit('Second Input File was not Chosen. Please Choose a File to Import.')
 
     sample_name_a = os.path.basename(filename_one)
     sample_name_b = os.path.basename(filename_two)
@@ -110,11 +118,11 @@ if __name__ == '__main__':
     # Check if file exists, close if not
     exist_one = os.path.exists(filename_one)
     if not exist_one:
-        sys.exit(filename_one + " does not exist in the Processed Data folder.")
+        sys.exit(filename_one + " does not exist.")
 
     exist_two = os.path.exists(filename_two)
     if not exist_two:
-        sys.exit(filename_two + " does not exist in the Processed Data folder.")
+        sys.exit(filename_two + " does not exist.")
 
     # Parse Data to pull Area and Mean data out into Arrays
     (area_one, perimeter_one, num_samples_one) = parse_stats_data(filename_one)

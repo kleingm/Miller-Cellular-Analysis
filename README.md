@@ -23,34 +23,34 @@
 * SciPy (1.8.0)
 * NumPy (1.22.1)
 * Tkinter
-* easygui (0.98.3)
 
 # <a name="main-programs"></a>Main Programs:
-* Cell Area Perimeter
-* t_testing
+* Cell_Area_Perimeter.py
+* t_testing.py
+* write_stats.py
 
 # <a name="how-to-use:"></a>How To Use:
-<p> <strong> Step #1: </strong> Load Data you want to process in the Raw CSV
-folder located in the data folder. </p>
+<p> <strong> Step #1: </strong> Run ImageJ to get data from a cell movie.
+The ImageJ Process is listed [here.](ReadMeImageJ.pdf) </p>
 
-<p> <strong> Step #2: </strong> Load the 'Cell_Area_Perimeter.py' file, go to
-lines 82 and 85, and edit the input file name and what you
-would like to name the outgoing file.</p>
+<p> <strong> Step #2: </strong> Load the "Cell_Area_Perimeter.py" program
+and run it. Two prompts will pop up. The first will ask you to choose a file
+to use for analysis. The second will be to save the new generated file. Save 
+the file as whatever name you would like. For example: processed_data.
+No need to add .csv to the end of it, as the program will do that for you.</p>
 
-<p> <strong> Step #3: </strong> Run the 'Cell_Area_Perimeter' code. This will
-automatically write a CSV containing statistics about the
-input sample to the Processed Data folder. </p>
+<p> <strong> Step #3: </strong> Check to see that your generated file exists,
+and has the format of the first row being labels, second row being data. Make
+sure these values seem reasonable.</p>
 
-<p> <strong> Step #4: </strong> Verify that the file was written. You can open
-up the file to make sure that it has relevant data about the
-samples mean area and mean perimeter.</p>
+<p> <strong> Step #4: </strong> After generating two new files from 
+Cell_Area_Perimeter program, open up "t_testing.py".</p>
 
-<p> <strong> Step #5: </strong> Open up 't_testing.py' and go to lines 79 and
-80. Select the two samples you would like to compare against
-each other. Make sure that the samples have been processed,
-and use the exact filename without the .csv at the end.</p>
+<p> <strong> Step #5: </strong> Run "t_testing.py". Each prompt will be 
+for the processed data you generated. Select one on the first pop-up, and
+the second on the second pop-up. The code will then execute.</p>
 
-<p> <strong> Step #6: </strong> Run the file. This will generate two plots 
+<p> <strong> Step #6: </strong> The program will generate two plots 
 comparing the area mean and perimeter means of the two 
 samples, and denote if their means are different or not.
 Plots without an asterisk are statistically insignificant,
@@ -69,7 +69,16 @@ generated using the Save icon on the plot popup.</p>
 standard deviation. </em> </center> </figcaption>
 </figure>
 
-<p> <strong> How to recreate this image: </strong> </p>
+<p> <strong> How to recreate this image: </strong> <br>
+Run the Cell_Area_Perimeter Program and select "miller_results.csv"
+from the Raw CSV folder. Save the output as Miller_Processed
+to wherever you'd like. Run the same program again, choose the same 
+file, but name it Miller_Copy. </p>
+
+<p>Next, load up the t_testing program and run that. When 
+prompted, select first the "Miller_Processed.csv" file, and 
+on the next prompt select the "Miller_Copy.csv" file. That
+will generate the image as depicted above.</p>
 
 
 # <a name="limitations:"></a>Limitations:

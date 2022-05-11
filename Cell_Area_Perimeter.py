@@ -1,5 +1,7 @@
 # These are all the packages needed for the code to run
 # No need to mess with these
+import sys
+
 import numpy as np
 import statistics as stat
 from write_stats import generate_csv_file
@@ -81,6 +83,9 @@ if __name__ == "__main__":
 
     tk.Tk().withdraw()  # we don't want a full GUI, so keep the root window from appearing
     filename = askopenfilename()  # show an "Open" dialog box and return the path to the selected file
+
+    if filename == '':
+        sys.exit('No Input File was Chosen. Please Choose a File to Import.')
 
     # Parse Data to get Area, Perimeter, and Number of Samples
     (area, perimeter, num_samples) = parse_cell_file(filename)
