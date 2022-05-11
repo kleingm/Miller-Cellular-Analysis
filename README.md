@@ -59,6 +59,9 @@ while those with asterisks are statistically significant.</p>
 <p> <strong> Step #7: </strong> Save the plots as they are 
 generated using the Save icon on the plot popup.</p>
 
+**Optional Step:** If you would like to see a video of the code being 
+run and the general process, click [here.](https://youtu.be/a8BySFF_FPo)
+
 # <a name="sample-results:"></a>Sample Results:
 
 <figure>

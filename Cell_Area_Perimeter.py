@@ -1,7 +1,6 @@
 # These are all the packages needed for the code to run
 # No need to mess with these
 import sys
-
 import numpy as np
 import statistics as stat
 from write_stats import generate_csv_file
